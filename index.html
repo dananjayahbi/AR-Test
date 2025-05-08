@@ -31,8 +31,7 @@
       <div class="control-group">
         <label for="bark-texture-select">Bark Texture:</label>
         <select id="bark-texture-select">
-          <option value="#bark-texture-1">Bark Texture 1</option>
-          <option value="#bark-texture-2">Bark Texture 2</option>
+          <option value="#bark-texture-1" selected>Bark Texture 1</option>
         </select>
       </div>
       
@@ -40,8 +39,8 @@
         <label for="leaves-texture-select">Leaves Texture:</label>
         <select id="leaves-texture-select">
           <option value="#leaf-texture-1">Leaves Texture 1</option>
-          <option value="#leaf-texture-2">Leaves Texture 2</option>
-          <option value="#leaf-texture-3" selected>Leaves Texture 3</option>
+          <option value="#leaf-texture-2" selected>Leaves Texture 2</option>
+          <option value="#leaf-texture-3">Leaves Texture 3</option>
         </select>
       </div>
       
@@ -80,11 +79,10 @@
         <a-asset-item id="tree-obj" src="assets/models/trees/Tree1.obj"></a-asset-item>
         <a-asset-item id="tree-mtl" src="assets/models/trees/Tree1.mtl"></a-asset-item>
         <!-- Tree texture images with updated paths -->
-        <img id="bark-texture-1" src="assets/textures/natural/bark/BarkDeciduous0143_5.jpg" />
-        <img id="bark-texture-2" src="assets/textures/natural/bark/BarkDeciduous0194_7.jpg" />
-        <img id="leaf-texture-1" src="assets/textures/natural/leaves/Leaves0120_35.png" />
-        <img id="leaf-texture-2" src="assets/textures/natural/leaves/Leaves0142_4.png" />
-        <img id="leaf-texture-3" src="assets/textures/natural/leaves/Leaves0156_1.png" />
+        <img id="bark-texture-1" src="assets/models/trees/textures/BarkDeciduous0143_5.jpg" />
+        <img id="leaf-texture-1" src="assets/models/trees/textures/Leaves0120_35.png" />
+        <img id="leaf-texture-2" src="assets/models/trees/textures/Leaves0142_4.png" />
+        <img id="leaf-texture-3" src="assets/models/trees/textures/Leaves0156_1.png" />
       </a-assets>
 
       <!-- Using standard Hiro marker -->
@@ -92,7 +90,7 @@
         <!-- 3D model with texture -->
         <a-entity
           obj-model="obj: #tree-obj; mtl: #tree-mtl"
-          material-override="barkTexture: #bark-texture-1; leavesTexture: #leaf-texture-3"
+          material-override="barkTexture: #bark-texture-1; leavesTexture: #leaf-texture-2"
           position="0 1.5 0"
           rotation="0 90 0"
           scale="0.5 0.5 0.5"
