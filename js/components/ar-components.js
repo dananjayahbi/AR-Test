@@ -115,3 +115,66 @@ AFRAME.registerComponent('material-override', {
     });
   }
 });
+
+// Model optimization component
+AFRAME.registerComponent('model-optimizer', {
+  schema: {
+    maxPolygons: {type: 'number', default: 10000},
+    simplifyModels: {type: 'boolean', default: true}
+  },
+  
+  init: function() {
+    this.el.addEventListener('model-loaded', this.optimizeModel.bind(this));
+  },
+  
+  optimizeModel: function(evt) {
+    if (!this.data.simplifyModels) return;
+    
+    const model = this.el.getObject3D('mesh');
+    if (!model) return;
+    
+    console.log('Optimizing 3D model performance...');
+    
+    let totalPolygons = 0;
+    
+    // Count polygons and apply optimizations
+    model.traverse((node) => {
+      if (node.isMesh) {
+        // Count current polygons
+        if (node.geometry) {
+          let polyCount = 0;
+          if (node.geometry.index) {
+            polyCount = node.geometry.index.count / 3;
+          } else if (node.geometry.attributes.position) {
+            polyCount = node.geometry.attributes.position.count / 3;
+          }
+          totalPolygons += polyCount;
+          
+          // Apply frustum culling for better performance
+          node.frustumCulled = true;
+          
+          // Optimize materials
+          if (node.material) {
+            // Disable shadows if not needed
+            node.castShadow = false;
+            node.receiveShadow = false;
+            
+            // Use simpler materials when possible
+            if (node.material.map) {
+              // Keep textures but simplify other properties
+              node.material.roughness = 1.0;
+              node.material.metalness = 0.0;
+            }
+          }
+        }
+      }
+    });
+    
+    console.log(`Model contains approximately ${totalPolygons} polygons`);
+    
+    // Warning if model is very complex
+    if (totalPolygons > this.data.maxPolygons) {
+      console.warn(`Model is highly detailed (${totalPolygons} polygons) and may cause performance issues.`);
+    }
+  }
+});
